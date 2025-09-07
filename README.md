@@ -4,7 +4,9 @@ PassGen: Offline Password Generator V1.69
   * Reset Full tool option added
   * Bugs fixed for windows devices
   * Logics Improved
-PassGen is a simple and secure offline password management tool built in C. It allows you to generate strong, random 
+
+ 
+#PassGen is a simple and secure offline password management tool built in C. It allows you to generate strong, random 
 passwords, assign unique titles to them, and save them directly to your local machine.
 
 [![Interface](https://i.postimg.cc/0yvRnP8Z/Screenshot-20250906-131732.jpg)](https://postimg.cc/dL5xtMZT)
