@@ -1,9 +1,9 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
+#include<stdlib.h>
 #include <time.h>
 #include <unistd.h>
-// #include <windows.h> //*******must uncomment this if u are running in windows
+//#include <windows.h> //*******must uncomment this if u are running in windows
 // machine, as i made this tool using andorid devics so i commented this******
 
 void clearScreen() {
@@ -32,7 +32,7 @@ void isValidSession() {
            "2D visual created with table style\n6.Password and Title will be "
            "backedup in your device directory so it is totaly offline\n7.Title "
            "and password will be in binary format so its kind of "
-           "encrypted.\n8.Fully supported on any console\n\n\nAs this is a "
+           "encrypted.\n8.Fully supported on any console\n9.After Showing all password ,it will be auto hide after 10 seconds\n\nIn version 1.69,we added Reset Password and reset Tool option\n\n\nAs this is a "
            "password generator and backuping tool,so u need to protect this "
            "tool too,\nEnter a password to encrypt this tool:");
     if (fgets(mahbub, sizeof(mahbub), stdin) != NULL) {
@@ -55,7 +55,7 @@ void isValidSession() {
     mahbub[strcspn(mahbub, "\n")] = '\0';
     if (strcmp(myPass, mahbub) == 0) {
       clearScreen();
-      printf("Welcome To PassGen V0.69\n");
+      printf("Welcome To PassGen V1.69\n");
     } else {
       printf("Invalid Password");
       exit(1);
@@ -64,8 +64,8 @@ void isValidSession() {
 }
 
 void MainMenu() {
-  printf("1,2 or 3 to Interract, any other character to Quit.\n\n1.See Saved "
-         "Password\n2.Add Password\n3.Edit Password\n\nEnter Your Choice: ");
+  printf("1-5 to Interract, any other character to Quit.\n\n1.See Saved "
+         "Password\n2.Add Password\n3.Edit Password\n4.Change Tool Password\n5.Reset All\n\nEnter Your Choice: ");
 }
 
 int main() {
@@ -205,7 +205,13 @@ int main() {
       srand(time(NULL));
       for (int i = 0; i < length; i++) {
 
-        int k = random() % 89 + 1;
+      #ifdef _WIN32
+      int k = rand() % 89 + 1;
+      #else
+      int k = random() % 89 + 1;
+      #endif
+
+
         genPass[i] = pass_gen[k];
       }
       genPass[length] = '\0';
@@ -298,7 +304,12 @@ int main() {
         srand(time(NULL));
         for (int i = 0; i < length; i++) {
 
-          int k = random() % 89 + 1;
+       #ifdef _WIN32
+       int k = rand() % 89 + 1;
+       #else
+       int k = random() % 89 + 1;
+       #endif
+
           genPass[i] = pass_gen[k];
         }
         genPass[length] = '\0';
@@ -312,7 +323,59 @@ int main() {
         fwrite(&myPass, sizeof(myPass), 1, write2);
         fclose(write2);
       }
-    } else {
+    }
+
+    else if (option == '4') {
+
+      char mahbub[64];
+  FILE *read = fopen("mahbub.bin", "rb");
+
+  if (read == NULL) {
+    printf("There is a problem Opening the file!! Try Again\n");
+  }
+  else{
+        char c;
+  while((c=getchar())!='\n'  && c!=EOF);
+
+  printf("Enter New Password: ");
+
+    if (fgets(mahbub, sizeof(mahbub), stdin) != NULL) {
+      mahbub[strcspn(mahbub, "\n")] = '\0';
+      FILE *write = fopen("mahbub.bin", "wb");
+
+      fwrite(mahbub, sizeof(char), 64, write);
+      fclose(write);
+      printf(
+          "\n\nCongrats!!! Password successfully changed");
+      exit(1);
+    }
+
+    }
+
+
+}
+
+else if (option == '5'){
+
+    if(remove("mahbub.bin")==0){
+       if(remove("total.bin")==0){
+        if(remove("pass.bin")==0){
+       printf("Reset Completed!!");
+        exit(1);
+
+    }
+    else{
+
+        printf("Maybe Reset Failed. Try Again!!");
+        exit(1);
+    }
+
+    }
+
+    }
+}
+
+      else {
       clearScreen();
       printf("\nThanks for using my tool.\nSubmit any bugs report "
              "at:\ngithub.com/MdMahbubTanmay\n\n    -----Sincerely Mahbub\n");
